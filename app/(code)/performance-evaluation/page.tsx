@@ -1,3 +1,4 @@
+"use client";
 import { DataTableDemo } from "@/components/Data-Table/component/data-table";
 import { FormSteps } from "@/lib/interface";
 

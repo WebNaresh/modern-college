@@ -1,5 +1,5 @@
 const page = () => {
-  return <>" gdfsfdgsda"</>;
+  return <> gdfsfdgsda</>;
 };
 
 export default page;

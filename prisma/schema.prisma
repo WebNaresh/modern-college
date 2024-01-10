@@ -60,10 +60,10 @@ model Performance {
   facultyName                String
   userId                     String
   phdDuringPeriod            String
-  teachingAndLearning        AverageResult[] //later
-  classEngagement            Int? //later
-  studentFeedback            StudentFeedback? //later
-  peerFeedback               PeerFeedback? //later
+  teachingAndLearning        AverageResult[]
+  classEngagement            Int?
+  studentFeedback            StudentFeedback?
+  peerFeedback               PeerFeedback?
   publications               PublicationAndJournal[]
   programsOrganized          ProgramsOrganized[]
   programsAttended           ProgramAttended[]

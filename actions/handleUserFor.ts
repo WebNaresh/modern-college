@@ -170,49 +170,49 @@ export const addAcademicAppraiselDetails = async (
     return { message: "user is not authorized", user: null };
   } else {
     try {
-      await prisma.personalInfo.upsert({
-        where: {
-          userId: session.user?.id,
-        },
-        update: {
-          mobile1: contact,
-        },
-        create: {
-          userId: session.user?.id as string,
-          mobile1: contact,
-        },
-      });
-      await prisma.academics.upsert({
-        where: {
-          userId: session.user?.id,
-        },
-        update: {
-          designation,
-          departmentName,
-          facultyName,
-          dateOfJoining,
-        },
-        create: {
-          userId: session.user?.id as string,
-          designation,
-          departmentName,
-          facultyName,
-          dateOfJoining,
-        },
-      });
-      const user = await prisma.user.update({
-        where: {
-          id: session.user?.id,
-        },
-        data: {
-          name,
-          image,
-        },
-        include: {
-          personalInfo: true,
-          academics: true,
-        },
-      });
+      // await prisma.personalInfo.upsert({
+      //   where: {
+      //     userId: session.user?.id,
+      //   },
+      //   update: {
+      //     mobile1: contact,
+      //   },
+      //   create: {
+      //     userId: session.user?.id as string,
+      //     mobile1: contact,
+      //   },
+      // });
+      // await prisma.academics.upsert({
+      //   where: {
+      //     userId: session.user?.id,
+      //   },
+      //   update: {
+      //     designation,
+      //     departmentName,
+      //     facultyName,
+      //     dateOfJoining,
+      //   },
+      //   create: {
+      //     userId: session.user?.id as string,
+      //     designation,
+      //     departmentName,
+      //     facultyName,
+      //     dateOfJoining,
+      //   },
+      // });
+      // const user = await prisma.user.update({
+      //   where: {
+      //     id: session.user?.id,
+      //   },
+      //   data: {
+      //     name,
+      //     image,
+      //   },
+      //   include: {
+      //     personalInfo: true,
+      //     academics: true,
+      //   },
+      // });
       const currentYear = new Date().getFullYear();
       const existingPerformance = await prisma.performance.findFirst({
         where: {
@@ -224,19 +224,19 @@ export const addAcademicAppraiselDetails = async (
         },
       });
 
-      if (!existingPerformance) {
-        await prisma.performance.create({
-          data: {
-            departmentName,
-            facultyName,
-            userId: session.user?.id as string,
-            phdDuringPeriod,
-          },
-        });
-      }
+      // if (!existingPerformance) {
+      //   await prisma.performance.create({
+      //     data: {
+      //       departmentName,
+      //       facultyName,
+      //       userId: session.user?.id as string,
+      //       phdDuringPeriod,
+      //     },
+      //   });
+      // }
       return {
         message: "user updated",
-        user: user,
+        // user: user,
       };
     } catch (error) {
       return { message: "Something went wrong", user: null };

@@ -1,4 +1,3 @@
-import { prisma } from "@/lib/primsa";
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -9,26 +8,26 @@ export async function POST(req: Request) {
 
   try {
     // Start a Prisma transaction
-    const transaction: User[] = await prisma.$transaction(
-      teacherArray.map((user) => {
-        return prisma.user.update({
-          where: {
-            id: user.id, // Assuming each user object has an 'id' field
-            role: "Teacher",
-          },
-          data: {
-            isAuthorize: "Authorize", // Set the isAuthorize field to 'Authorize'
-          },
-        });
-      })
-    );
+    // const transaction: User[] = await prisma.$transaction(
+    //   teacherArray.map((user) => {
+    //     return prisma.user.update({
+    //       where: {
+    //         id: user.id, // Assuming each user object has an 'id' field
+    //         role: "Teacher",
+    //       },
+    //       data: {
+    //         isAuthorize: "Authorize", // Set the isAuthorize field to 'Authorize'
+    //       },
+    //     });
+    //   })
+    // );
 
-    console.log(`🚀 ~ Users updated:`, transaction);
+    // console.log(`🚀 ~ Users updated:`, transaction);
 
     return new NextResponse(
       JSON.stringify({
         message: "Congrats request is initiated",
-        users: transaction,
+        // users: transaction,
       }),
       { status: 201 }
     );

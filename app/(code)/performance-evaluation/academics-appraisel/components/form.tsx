@@ -44,13 +44,17 @@ const FormDetails = (props: Props) => {
   const { toast } = useToast();
   const { loading, setLoading } = useStore();
   const { index, nextStep } = useUpdateUserStore();
+  console.log(`🚀 ~ arrayOfPreviousYear.length:`, arrayOfPreviousYear.length);
+
   const onSubmit = async () => {
     console.log("hello");
+    let currentYearCount = 0;
 
     console.log(arrayOfPreviousYear);
     const hasCurrentYearEntry = arrayOfPreviousYear.some(
       (entry) => entry.previousYear === "Current"
     );
+    console.log(`🚀 ~ hasCurrentYearEntry:`, hasCurrentYearEntry);
 
     // Check if there is at least one entry for the previous year
     const hasPreviousYearEntry = arrayOfPreviousYear.some(
@@ -145,7 +149,7 @@ const FormDetails = (props: Props) => {
 
   return (
     <div className="flex-col flex items-center">
-      <MiniForm arrayOfPreviousYear={setArrayOfPreviousYear} />
+      <MiniForm setArrayOfPreviousYear={setArrayOfPreviousYear} />
       <Table>
         <TableCaption>
           Minimum 1 subject of current Year and 1 subject of previous Year
@@ -180,7 +184,7 @@ const FormDetails = (props: Props) => {
       </Table>
       <Button
         onClick={onSubmit}
-        disabled={!(arrayOfPreviousYear.length > 0)}
+        disabled={!(arrayOfPreviousYear.length >= 3)}
         className="m-10 text-center w-fit"
       >
         Save Changes

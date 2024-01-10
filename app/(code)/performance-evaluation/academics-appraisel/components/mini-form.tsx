@@ -24,7 +24,9 @@ import { MdAdd } from "react-icons/md";
 import { z } from "zod";
 
 type Props = {
-  arrayOfPreviousYear: React.Dispatch<React.SetStateAction<UserForm1Values[]>>;
+  setArrayOfPreviousYear: React.Dispatch<
+    React.SetStateAction<UserForm1Values[]>
+  >;
 };
 type UserForm1Values = z.infer<typeof formSchema>;
 const formSchema = z.object({
@@ -57,16 +59,16 @@ const MiniForm = (props: Props) => {
       result: 0,
     },
   });
-  console.log(
-    `🚀 ~ formData:`,
-    (form.getValues("noOfClassesConducted") /
-      form.getValues("noOfAllotedHour")) *
-      100
-  );
+
   const onSubmit = async (formData: UserForm1Values) => {
+    console.log(`🚀 ~ formData:`, formData);
     // formData.result =
     //   (formData.noOfClassesConducted / formData.noOfAllotedHour) * 100;
-    props.arrayOfPreviousYear((prevArray) => [...prevArray, formData]);
+    props.setArrayOfPreviousYear((prevArray) => {
+      console.log(`🚀 ~ prevArray:`, prevArray);
+      console.log(`🚀 ~ formData:`, formData);
+      return [...prevArray, formData];
+    });
     // form.reset();
   };
   return (

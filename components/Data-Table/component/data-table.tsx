@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { toast } from "@/components/ui/use-toast";
 import useStore from "@/hooks/loader-hook";
 import { FormSteps } from "@/lib/interface";
 import {
@@ -21,6 +20,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { columns } from "./column";
@@ -29,7 +29,7 @@ interface Props {
   data: FormSteps[];
 }
 export function DataTableDemo({ data }: Props) {
-  const { refresh } = useRouter();
+  const { refresh, push } = useRouter();
   const { setLoading } = useStore();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -55,72 +55,13 @@ export function DataTableDemo({ data }: Props) {
       rowSelection,
     },
   });
-
-  const authorize = async (array: any[]) => {
-    let restructredArray = array.map((array) => array.original);
-
-    if (array.length > 0) {
-      setLoading(true);
-      fetch("/api/update-teacher-position", {
-        method: "POST",
-        body: JSON.stringify({ teacherArray: restructredArray }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          toast({
-            title: "Succesufully authorize teacher",
-            description: "work done successfully",
-          });
-          refresh();
-        })
-        .catch((res) => {
-          toast({
-            title: "Error Occured Please refresh",
-            description: "something went wrong",
-            variant: "destructive",
-          });
-          refresh();
-        })
-        .finally(() => {
-          setLoading(false);
-          refresh();
-        });
-    }
+  const handleOnclickOfRow = (rowData: FormSteps) => {
+    console.log("Row clicked. Data:", rowData);
+    push("/performance-evaluation/form-details");
   };
-  const deAuthorize = async (array: any[]) => {
-    let restructredArray = array.map((array) => array.original);
-    if (array.length > 0) {
-      setLoading(true);
-      fetch("/api/degrade-teacher-position", {
-        method: "POST",
-        body: JSON.stringify({ teacherArray: restructredArray }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          refresh();
-          toast({
-            title: "User DeAuthorize",
-            description: "This user is also deleted from database",
-          });
-        })
-        .catch((res) => {
-          toast({
-            title: "User DeAuthorization failed",
-            description: "Error occured in server please try after some time",
-            variant: "destructive",
-          });
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  };
+
   return (
-    <div className="w-full p-4 box-border">
+    <div className="w-full box-border">
       <div className="rounded-md border">
         <Table className="">
           <TableHeader>
@@ -143,21 +84,30 @@ export function DataTableDemo({ data }: Props) {
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => {
+                return (
+                  <Link
+                    key={row.id}
+                    href={row.original.href as string}
+                    className=" table-row"
+                  >
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                      className=" contents"
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </Link>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell
