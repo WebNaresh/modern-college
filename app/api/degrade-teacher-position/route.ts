@@ -1,5 +1,4 @@
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/primsa";
 import { User } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -14,34 +13,34 @@ export async function POST(req: Request) {
   };
 
   try {
-    // Start a Prisma transaction
-    const updateOperations = teacherArray.map((user) => {
-      return prisma.user.update({
-        where: {
-          id: user.id,
-          role: "Teacher",
-        },
-        data: {
-          isAuthorize: "UnAuthorize",
-        },
-      });
-    });
+    // // Start a Prisma transaction
+    // const updateOperations = teacherArray.map((user) => {
+    //   return prisma.user.update({
+    //     where: {
+    //       id: user.id,
+    //       role: "Teacher",
+    //     },
+    //     data: {
+    //       isAuthorize: "UnAuthorize",
+    //     },
+    //   });
+    // });
 
-    const deleteOperations = teacherArray.map((user) => {
-      return prisma.user.deleteMany({
-        where: { id: user.id, role: "Teacher" },
-      });
-    });
+    // const deleteOperations = teacherArray.map((user) => {
+    //   return prisma.user.deleteMany({
+    //     where: { id: user.id, role: "Teacher" },
+    //   });
+    // });
 
-    const transaction = await prisma.$transaction([
-      ...updateOperations,
-      ...deleteOperations,
-    ]);
+    // const transaction = await prisma.$transaction([
+    //   ...updateOperations,
+    //   ...deleteOperations,
+    // ]);
 
     return new NextResponse(
       JSON.stringify({
         message: "Congrats request is initiated",
-        users: transaction,
+        // users: transaction,
       }),
       { status: 201 }
     );

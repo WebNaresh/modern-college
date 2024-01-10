@@ -62,15 +62,16 @@ const useUpdateUserStore = create<UserTYpe>((set) => ({
     });
   },
   makeIndex: (data) => {
-    if (data.user?.personalInfo === null || undefined) {
-      return 1;
-    } else if (data.user?.familyDetail?.length! < 2) {
-      return 2;
-    } else if (data.user?.previousAcademics?.length! < 2) {
-      return 3;
-    } else {
-      return 0;
-    }
+    // if (data.user?.personalInfo === null || undefined) {
+    //   return 1;
+    // } else if (data.user?.familyDetail?.length! < 2) {
+    //   return 2;
+    // } else if (data.user?.previousAcademics?.length! < 2) {
+    //   return 3;
+    // } else {
+    //   return 0;
+    // }
+    return 0;
   },
 }));
 

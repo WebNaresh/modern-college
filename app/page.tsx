@@ -7,6 +7,7 @@ const HomeComponent: NextPage = async () => {
     <>
       <CarouselComp />
       <Utility1 />
+      hello
     </>
   );
 };

@@ -1,14 +1,13 @@
 "use client";
 import { FormSteps } from "@/lib/interface";
 import { ColumnDef } from "@tanstack/react-table";
-import Actions from "./actions";
 
 export const columns: ColumnDef<FormSteps>[] = [
   {
     accessorKey: "formStep",
     header: () => <div className="text-left">From Steps</div>,
     cell: ({ row }) => (
-      <div className="capitalize text-left pl-2">
+      <div className="capitalize text-left pl-2 cursor-pointer">
         {row.getValue("formStep")}
       </div>
     ),
@@ -33,18 +32,18 @@ export const columns: ColumnDef<FormSteps>[] = [
       );
     },
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    header: () => <div className="text-center">Actions</div>,
-    cell: ({ row }) => {
-      const payment = row.original;
+  // {
+  //   id: "actions",
+  //   enableHiding: false,
+  //   header: () => <div className="text-center">Actions</div>,
+  //   cell: ({ row }) => {
+  //     const payment = row.original;
 
-      return (
-        <div className="w-full text-center">
-          <Actions formStep={row.original} />
-        </div>
-      );
-    },
-  },
+  //     return (
+  //       <div className="w-full text-center">
+  //         <Actions formStep={row.original} />
+  //       </div>
+  //     );
+  //   },
+  // },
 ];

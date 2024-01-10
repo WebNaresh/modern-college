@@ -1,19 +1,20 @@
-import { RoutesA } from "@/lib/interface";
-import { cn } from "@/lib/utils";
+import { FormSteps, RoutesA } from "@/lib/interface";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { DataTableDemo } from "../Data-Table/component/data-table";
 import { ThemeToggle } from "../toggle-button";
+import { Button } from "../ui/button";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "../ui/navigation-menu";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
 
 type Props = {
   teacherArray?: User[] | null;
@@ -90,7 +91,7 @@ const RightNav = (props: Props) => {
 
   return (
     <>
-      {routes.map((ele, i) => {
+      {/* {routes.map((ele, i) => {
         return (
           <li key={i} className={`${ele.role}`}>
             {data?.data?.user?.role !== "Teacher" ? (
@@ -124,59 +125,93 @@ const RightNav = (props: Props) => {
                           Here You can fill performance evaluation form of
                           Modern College Of Engineering MCA branch
                         </ListItem>
-                        {/* <ListItem
-                          href="/docs/installation"
-                          title="Installation"
-                        >
-                          How to install dependencies and structure your app.
-                        </ListItem>
-                        <ListItem
-                          href="/docs/primitives/typography"
-                          title="Typography"
-                        >
-                          Styles for headings, paragraphs, lists...etc
-                        </ListItem> */}
                       </ul>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
-            )}
-          </li>
+            )}           </li>
         );
       })}
+      */}
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            className=" text-primary hover:text-primary"
+          >
+            <GiHamburgerMenu className="text-xl cursor-pointer" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent className=" !max-w-2xl gap-4 flex flex-col">
+          <SheetHeader>
+            <SheetTitle>Monthly Evaluation Form</SheetTitle>
+            <SheetDescription>
+              Here you can update you monthly evaluation
+            </SheetDescription>
+          </SheetHeader>
+          <DataTableDemo data={stepData} />
 
-      <li>
-        <ThemeToggle />
-      </li>
+          <SheetFooter className="!justify-center">
+            <ThemeToggle />
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
     </>
   );
 };
 
 export default RightNav;
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li className="w-full">
-      <NavigationMenuLink asChild>
-        <Link
-          href={props.href as string}
-          ref={ref}
-          className={cn(
-            "block select-none w-full space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
+
+const stepData: FormSteps[] = [
+  {
+    status: false,
+    formStep: "Update form-details",
+    href: "/performance-evaluation/form-details",
+  },
+  {
+    status: false,
+    formStep: "Academic appraisel-details",
+    href: "/performance-evaluation/academics-appraisel",
+  },
+  {
+    status: false,
+    formStep: "Publication-details",
+    href: "/performance-evaluation/",
+  },
+  {
+    status: false,
+    formStep: "Organized program-details",
+    href: "/performance-evaluation/",
+  },
+  {
+    status: false,
+    formStep: "Attended program-details",
+    href: "/performance-evaluation/",
+  },
+  {
+    status: false,
+    formStep: "Sposored research-details",
+    href: "/performance-evaluation/",
+  },
+  {
+    status: false,
+    formStep: "Consultancy service-details",
+    href: "/performance-evaluation/",
+  },
+  {
+    status: false,
+    formStep: "Inteleactual property-details",
+    href: "/performance-evaluation/",
+  },
+  {
+    status: false,
+    formStep: "examination duties-details",
+    href: "/performance-evaluation/",
+  },
+  {
+    status: false,
+    formStep: "Extra activities-details",
+    href: "/performance-evaluation/",
+  },
+];
